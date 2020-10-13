@@ -18,6 +18,5 @@
     "eslint-config-hackreactor": "git://github.com/reactorcore/eslint-config-hackreactor",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.4"
-  },
-  "proxy": "http://localhost:3033"
+  }
 }
