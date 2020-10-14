@@ -5,7 +5,6 @@ const path = require('path');
 const request = require('request');
 const morgan = require('morgan');
 const port = process.env.PORT || 3033;
-//const bonusUrl = 'http://localhost:3031'
 
 app.use(morgan('dev'));
 app.use(parser.urlencoded({ extended: true }));
@@ -33,4 +32,16 @@ app.get('/', (req, res) => {
 app.get('/bonuses/bundle.js', (req, res) => {
   console.log('Worked!');
   request('http://localhost:3031/bundle.js').pipe(res);
+})
+
+app.get('/items/bundle.js', (req, res) => {
+  request('http://localhost:3200/bundle.js').pipe(res);
+})
+
+app.get('/tiers/bundle.js', (req, res) => {
+  request('http://localhost:3101/bundle.js').pipe(res);
+})
+
+app.get('/descriptions/bundle.js', (req, res) => {
+  request('http://localhost:3663/bundle.js').pipe(res);
 })
