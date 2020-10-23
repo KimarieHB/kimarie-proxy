@@ -11,15 +11,35 @@ app.use(parser.json());
 
 app.use(express.static('./client'));
 
-// Send header to allow all cross origin requests; header may need to be more specific in production
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  //res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+  res.header('Access-Control-Allow-Headers', '*');
+  // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
 
 app.listen(port, () => {
   console.log(`Proxy server listening on port ${port}`);
+});
+
+app.get('/7', (req, res) => {
+  //'/Users/kimmybeee/Desktop/kimarie-proxy/client/index.html'
+  res.sendFile('/Users/kimmybeee/Desktop/kimarie-proxy/client/index.html', (err) => {
+    if (err) {
+      let msg = 'Error on connection to Proxy HTML';
+      console.log(msg, err);
+      res.send(err);
+    }
+  })
+})
+
+app.get('/bonus/:id', (req, res) => {
+  request('http://localhost:3031/bonus/:id')
+  .on('error', (err) => {
+    let msg = 'Error on connection to BONUSES';
+    console.log(msg, err);
+    res.status(500).send(msg);
+  })
+  .pipe(res);
 });
 
 app.get('/bonuses/bundle.js', (req, res) => {
@@ -68,6 +88,7 @@ app.get('/charity/bundle.js', (req, res) => {
     let msg = 'Error on connection to CHARITIES';
     console.log(msg, err);
     res.status(500).send(msg);
-  )}
+  })
   .pipe(res);
 });
+
