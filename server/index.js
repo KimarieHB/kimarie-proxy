@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 const parser = require('body-parser');
-const request = require('request');
+const path = require('path');
 const morgan = require('morgan');
 const port = process.env.PORT || 3033;
 
@@ -11,22 +11,16 @@ app.use(parser.json());
 
 app.use(express.static('./client'));
 
-// app.use((req, res, next) => {
-//   res.header('Access-Control-Allow-Headers', '*');
-//   // res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-//   next();
-// });
-
 app.listen(port, () => {
   console.log(`Proxy server listening on port ${port}`);
 });
 
-// app.get('/*', (req, res) => {
-//   request('http://localhost:3031')
-//   .on('error', (err) => {
-//     let msg = 'Error on connection to BONUSES';
-//     console.log(msg, err);
-//     res.status(500).send(msg);
-//   })
-//   .pipe(res);
-// });
+app.all('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/../client/index.html'), (err) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log('HTML re-served');
+    }
+  })
+});
