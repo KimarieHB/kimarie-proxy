@@ -15,6 +15,9 @@ app.listen(port, () => {
   console.log(`Proxy server listening on port ${port}`);
 });
 
+// app.get('/bonus/:id', )
+  //redirect to deployed url for service/bonus/:id
+
 app.all('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/../client/index.html'), (err) => {
     if (err) {
