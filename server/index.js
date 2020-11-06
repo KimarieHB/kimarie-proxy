@@ -17,7 +17,8 @@ app.listen(port, () => {
 });
 
 app.get('/bonus/:id', (req, res) => {
-  request('http://ec2-13-57-226-88.us-west-1.compute.amazonaws.com')
+  let id = req.params.id;
+  request(`http://ec2-13-57-226-88.us-west-1.compute.amazonaws.com/bonus/${id}`)
   .pipe(res);
 });
 
