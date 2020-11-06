@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const parser = require('body-parser');
+const request = require('request');
 const path = require('path');
 const morgan = require('morgan');
 const port = process.env.PORT || 3033;
@@ -15,8 +16,9 @@ app.listen(port, () => {
   console.log(`Proxy server listening on port ${port}`);
 });
 
-// app.get('/bonus/:id', )
-  //redirect to deployed url for service/bonus/:id
+app.get('/bonus/:id', (req, res) => {
+  request('http://ec2-13-57-226-88.us-west-1.compute.amazonaws.com/bonus/:id').pipe(res);
+});
 
 app.all('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/../client/index.html'), (err) => {
